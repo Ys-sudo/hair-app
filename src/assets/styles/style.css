@@ -1,0 +1,382 @@
+* {
+  transition-duration: 0.2s;
+}
+#photoSegment {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 620px;
+}
+canvas {
+  transition-duration: 0s !important;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+p {
+  font-size: 12.5px;
+}
+
+.webcam {
+  position: relative;
+  width: 100%; /* Adjust as needed */
+  height: 100%; /* Adjust as needed */
+  overflow: hidden;
+}
+
+#webcam {
+  object-fit: cover;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: #111;
+  max-width: 375px;
+  max-height: 669px;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  color: white;
+}
+#modal-wrap {
+  height: 100%;
+  width: 100%;
+  /*background-image: url("./img/cover.jpg");*/
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 10% 20px 20% 20px;
+  display: block;
+  background: rgba(0, 0, 0, 0.25);
+  min-width: 90%;
+}
+
+#modal-wrap > div.modal-body {
+  padding: 20px;
+  width: 100%;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  font-size: 1.5em;
+  color: white;
+  position: absolute;
+  margin-top: 5px;
+  z-index: 100;
+}
+
+.close-button:hover {
+  cursor: pointer;
+}
+#webcamButton,
+#photoButton,
+#downloadBtn,
+#closeBtn {
+  width: 80%;
+  margin: 10px 10%;
+  font-variant: all-small-caps;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #fff;
+  cursor: pointer;
+}
+#webcamButton,
+#downloadBtn,
+#closeBtn {
+  padding: 10px;
+  background: rgb(74, 4, 194);
+  border: 1px solid rgb(74, 4, 194);
+}
+
+#photoButton:hover,
+#stop-btn:hover {
+  color: rgb(132, 83, 255);
+}
+.up:hover,
+.up:focus {
+  box-shadow: inset 0 -3.25em 0 0 black !important;
+  border: 1px solid rgb(95, 6, 249);
+  color: rgb(132, 83, 255) !important;
+}
+
+#photoButton {
+  border: 0px solid white;
+  background: none;
+  color: white;
+}
+.modal-body > p {
+  font-variant: all-small-caps;
+  font-size: 20px;
+}
+
+#modal-action {
+  max-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-end;
+  min-height: 100%;
+}
+
+.color-btn {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50%;
+  margin: auto;
+  cursor: pointer !important;
+}
+
+.swiper-slide {
+  max-width: 70px;
+}
+.swiper-scrollbar {
+  margin-top: 20px;
+}
+.swiper-horizontal {
+  height: 100px !important;
+}
+:root {
+  --swiper-scrollbar-border-radius: 10px;
+  --swiper-scrollbar-top: 75px;
+  --swiper-scrollbar-bottom: 4px;
+  --swiper-scrollbar-left: auto;
+  --swiper-scrollbar-right: 4px;
+  --swiper-scrollbar-sides-offset: 1%;
+  --swiper-scrollbar-bg-color: rgba(0, 0, 0, 0.1);
+  --swiper-scrollbar-drag-bg-color: rgba(74, 4, 194, 0.99);
+  --swiper-scrollbar-size: 7px;
+}
+
+.modal-header {
+  position: absolute;
+  z-index: 4;
+  margin-left: 160px;
+  margin-top: 5px;
+}
+
+#dye-col {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+}
+#shop-link {
+  display: none;
+  min-width: 215px;
+  align-items: center;
+  justify-content: end;
+  text-decoration: none;
+  color: white;
+  padding: 5px;
+  gap: 10px;
+  margin-top: -5px;
+  margin-right: 9px;
+  border-radius: 5px;
+}
+#shop-link:hover > div > div > p#dye-name {
+  background-color: #5f06f9;
+}
+#s-name {
+  font-size: 10px;
+  margin: 0;
+}
+#dye-name {
+  font-size: 12px;
+  margin: 5px;
+}
+
+.color-btn {
+  margin-top: 10px;
+}
+
+#ui-btns {
+  display: none;
+  margin-top: 80px;
+  margin-left: 330px;
+  position: absolute;
+  z-index: 100;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#pho-icon,
+#sep-icon {
+  filter: brightness(0) invert(1);
+  cursor: pointer;
+}
+#pho-icon:hover,
+#sep-icon:hover {
+  filter: brightness(1) invert(0);
+}
+
+.animated {
+  animation: 2s ease 0s infinite normal none running pulse;
+}
+
+#download-container {
+  max-width: 375px;
+  max-height: 669px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 10px;
+  z-index: 10000;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background: #222;
+}
+#mergedImage {
+  max-width: 90%;
+  max-height: 395px;
+  border-radius: 5px;
+  object-fit: contain;
+  margin: auto;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+#hide-img-button {
+  left: 10px !important;
+  top: 5px !important;
+}
+
+#downloadBtn,
+#closeBtn {
+  width: 345px !important;
+  margin: 10px 0 !important;
+}
+
+.draggable-border {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: calc(50% - 1.5px);
+  background: hotpink;
+  z-index: 1000;
+  cursor: ew-resize;
+  transition-duration: 0s !important;
+}
+
+.draggable-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: -100px; /*draggable area */
+  background: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* Inherit the background from the parent element */
+  z-index: 1; /* Place it behind the main element */
+}
+
+#series-select {
+  min-width: 100%;
+  margin-top: 0;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant: all-small-caps;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  font-size: 18px;
+  min-height: 55px;
+  padding: 0 20px;
+  background-color: rgba(255, 255, 255, 1);
+  border: 0px solid rgba(255, 255, 255, 1) !important;
+  color: #111111;
+  cursor: pointer;
+  z-index: 1000;
+}
+#series-select * {
+  transition-duration: 0s !important;
+}
+.options-container {
+  width: 100%;
+  position: relative;
+}
+.selected-option {
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 0 10px 10px !important;
+  justify-content: center;
+  color: #5f06f9;
+}
+.option {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  text-align: left;
+  padding: 5px 10px;
+  align-items: center;
+  gap: 15px;
+}
+.selected-option:hover,
+.option:hover {
+  background-color: rgb(95, 6, 249);
+  color: white;
+  transition-duration: 0s !important;
+}
+.selected-option:hover > img,
+.option:hover > img {
+  filter: brightness(0) invert(1);
+}
+.color-samples-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.color-sample {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
