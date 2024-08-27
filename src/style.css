@@ -5,7 +5,7 @@
   position: relative;
   z-index: 0;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: center;
   height: 620px;
 }
@@ -34,18 +34,6 @@ p {
   object-fit: cover;
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Arial, sans-serif;
-}
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -56,6 +44,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100000;
 }
 
 .modal {
@@ -168,16 +157,16 @@ html {
   cursor: pointer !important;
 }
 
-.swiper-scrollbar {
+.modal-footer .swiper-scrollbar {
   margin-top: -10px;
   background: rgba(0, 0, 0, 0.25);
 }
-.swiper-scrollbar-drag {
+.modal-footer .swiper-scrollbar-drag {
   background: #5f06f9;
   height: 10px;
   border-radius: 5px;
 }
-.swiper-horizontal {
+.modal-footer .swiper-horizontal {
   height: 100px !important;
 }
 :root {
@@ -210,7 +199,7 @@ html {
   position: absolute;
   min-width: 215px;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   text-decoration: none;
   color: white;
   padding: 5px;
@@ -430,7 +419,7 @@ html {
   background-color: rgba(0, 0, 0, 0.5); /* 50% transparent black */
   justify-content: center;
   align-items: center;
-  z-index: 999999; /* Ensure it's on top of everything else */
+  z-index: 99999; /* Ensure it's on top of everything else */
 }
 
 .preloader-container {

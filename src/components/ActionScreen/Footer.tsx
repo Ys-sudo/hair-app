@@ -4,7 +4,7 @@ import "swiper/css";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { app } from "../../firebase";
 import ShopLink from "./ShopLink";
-import { Navigation, Scrollbar, Mousewheel, FreeMode } from "swiper/modules";
+import { Scrollbar, Mousewheel, FreeMode } from "swiper/modules";
 import { Dye, Series, DyeData } from "../../types";
 
 declare global {
@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-Swiper.use([Navigation, Scrollbar, Mousewheel, FreeMode]);
+Swiper.use([Scrollbar, Mousewheel, FreeMode]);
 
 interface FooterProps {
   updateColor: (color: string, opacity: number) => void;
