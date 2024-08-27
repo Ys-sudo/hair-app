@@ -13,8 +13,11 @@ const UiButtons: React.FC = () => {
   window.savedImageData = window.savedImageData || null;
   window.savedImageDataV = window.savedImageDataV || null;
 
+  const createWorker = () => {
+    return new Worker(new URL("./blurWorker.js", import.meta.url));
+  };
+
   const [isLoading, setIsLoading] = useState(false);
-  const [worker, setWorker] = useState<Worker | null>(null);
 
   const isMobile = () => window.innerWidth <= 768;
 
@@ -268,112 +271,54 @@ const UiButtons: React.FC = () => {
     }
   };
 
-  // Process canvases to create image for the download
-  const applyGaussianBlur = (
-    imageData: ImageData,
-    radius: number
-  ): ImageData => {
-    const width = imageData.width;
-    const height = imageData.height;
-    const data = imageData.data;
-    const blurredData = new Uint8ClampedArray(data.length);
-
-    const kernelSize = radius * 2 + 1;
-    const kernel = new Float32Array(kernelSize);
-    const sigma = radius / 2;
-    const twoSigmaSquared = 2 * sigma * sigma;
-    const PI = Math.PI;
-    let kernelSum = 0;
-
-    // Generate Gaussian kernel
-    for (let i = 0; i < kernelSize; i++) {
-      const x = i - radius;
-      kernel[i] =
-        Math.exp(-(x * x) / twoSigmaSquared) / (sigma * Math.sqrt(2 * PI));
-      kernelSum += kernel[i];
-    }
-
-    // Normalize the kernel
-    for (let i = 0; i < kernelSize; i++) {
-      kernel[i] /= kernelSum;
-    }
-
-    const applyKernel = (x: number, y: number) => {
-      let r = 0,
-        g = 0,
-        b = 0,
-        a = 0;
-      let weightSum = 0;
-
-      for (let ky = -radius; ky <= radius; ky++) {
-        for (let kx = -radius; kx <= radius; kx++) {
-          const ix = Math.min(width - 1, Math.max(0, x + kx));
-          const iy = Math.min(height - 1, Math.max(0, y + ky));
-          const index = (iy * width + ix) * 4;
-          const weight = kernel[ky + radius] * kernel[kx + radius];
-
-          r += data[index] * weight;
-          g += data[index + 1] * weight;
-          b += data[index + 2] * weight;
-          a += data[index + 3] * weight * 0.75;
-          weightSum += weight;
-        }
-      }
-
-      return {
-        r: r / weightSum,
-        g: g / weightSum,
-        b: b / weightSum,
-        a: a / weightSum,
-      };
-    };
-
-    // Apply the Gaussian blur
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const { r, g, b, a } = applyKernel(x, y);
-        const index = (y * width + x) * 4;
-        blurredData[index] = r;
-        blurredData[index + 1] = g;
-        blurredData[index + 2] = b;
-        blurredData[index + 3] = a;
-      }
-    }
-
-    return new ImageData(blurredData, width, height);
-  };
-
   const createBlurredCanvas = (
     sourceCanvas: HTMLCanvasElement,
     blurRadius: number
-  ): HTMLCanvasElement => {
-    const offScreenCanvas = document.createElement("canvas");
-    const offScreenContext = offScreenCanvas.getContext("2d");
+  ): Promise<HTMLCanvasElement> => {
+    return new Promise((resolve) => {
+      setIsLoading(true); // Show preloader
 
-    offScreenCanvas.width = sourceCanvas.width;
-    offScreenCanvas.height = sourceCanvas.height;
+      const offScreenCanvas = document.createElement("canvas");
+      const offScreenContext = offScreenCanvas.getContext("2d");
 
-    if (blurRadius === 0) {
+      offScreenCanvas.width = sourceCanvas.width;
+      offScreenCanvas.height = sourceCanvas.height;
+
+      if (blurRadius === 0) {
+        offScreenContext?.drawImage(sourceCanvas, 0, 0);
+        setIsLoading(false); // Hide preloader
+        resolve(offScreenCanvas);
+        return;
+      }
+
       offScreenContext?.drawImage(sourceCanvas, 0, 0);
-      return offScreenCanvas;
-    }
 
-    offScreenContext?.drawImage(sourceCanvas, 0, 0);
+      const imageData = offScreenContext?.getImageData(
+        0,
+        0,
+        offScreenCanvas.width,
+        offScreenCanvas.height
+      );
 
-    const imageData = offScreenContext?.getImageData(
-      0,
-      0,
-      offScreenCanvas.width,
-      offScreenCanvas.height
-    );
-    if (imageData) {
-      const blurredImageData = applyGaussianBlur(imageData, blurRadius);
-      offScreenContext?.putImageData(blurredImageData, 0, 0);
-    }
-    return offScreenCanvas;
+      if (imageData) {
+        const worker = createWorker();
+        worker.onmessage = function (e) {
+          offScreenContext?.putImageData(e.data, 0, 0);
+          setIsLoading(false); // Hide preloader
+          resolve(offScreenCanvas);
+          worker.terminate(); // Clean up the worker
+        };
+        worker.postMessage({ imageData, radius: blurRadius });
+      } else {
+        setIsLoading(false); // Hide preloader
+        resolve(offScreenCanvas);
+      }
+    });
   };
 
-  const captureScreenshot = () => {
+  const captureScreenshot = async () => {
+    const videoElement1 = document.getElementById("webcam") as HTMLVideoElement;
+    videoElement1.pause();
     setIsLoading(true);
     const canvas1 = document.getElementById("canvas1") as HTMLCanvasElement;
     const canvas1a = document.getElementById("canvas1a") as HTMLCanvasElement;
@@ -394,32 +339,40 @@ const UiButtons: React.FC = () => {
     fullCanvas.width = canvasWidth;
     fullCanvas.height = canvasHeight;
 
-    const drawLayerWithBlur = (
+    const drawLayerWithBlur = async (
       sourceCanvas: HTMLCanvasElement,
       context: CanvasRenderingContext2D,
       blendMode: GlobalCompositeOperation,
       blurRadius: number
     ) => {
-      const blurredCanvas = createBlurredCanvas(sourceCanvas, blurRadius);
+      const blurredCanvas = await createBlurredCanvas(sourceCanvas, blurRadius);
       context.globalCompositeOperation = blendMode;
       context.drawImage(blurredCanvas, 0, 0);
     };
 
     if (fullContext) {
-      drawLayerWithBlur(canvas2, fullContext, "source-over", 0);
-      drawLayerWithBlur(canvas1, fullContext, "color", 25);
-      drawLayerWithBlur(canvas1a, fullContext, "soft-light", 10);
+      await drawLayerWithBlur(canvas2, fullContext, "source-over", 0);
+      if (isMobile()) {
+        await drawLayerWithBlur(canvas1, fullContext, "color", 15);
+      } else {
+        await drawLayerWithBlur(canvas1, fullContext, "color", 30);
+      }
+      await drawLayerWithBlur(canvas1a, fullContext, "soft-light", 10);
     } else {
+      setIsLoading(false); // Ensure the preloader is hidden if there's an error
       return;
     }
+
     const croppedCanvas = document.createElement("canvas");
     const croppedContext = croppedCanvas.getContext("2d");
     if (boundingRect) {
       croppedCanvas.width = boundingRect.width;
       croppedCanvas.height = boundingRect.height;
     } else {
+      setIsLoading(false); // Ensure the preloader is hidden if there's an error
       return;
     }
+
     const scaleX = croppedCanvas.width / fullCanvas.width;
     const scaleY = croppedCanvas.height / fullCanvas.height;
     const scale = Math.max(scaleX, scaleY);
@@ -467,11 +420,13 @@ const UiButtons: React.FC = () => {
       "mergedImage"
     ) as HTMLImageElement;
     mergedImage.src = img;
-    setIsLoading(false);
-    mergeVCanvasesAndDisplay();
+
+    setIsLoading(false); // Hide preloader once everything is done
+    mergeVCanvasesAndDisplay(); // Assuming this is a synchronous function
+    videoElement1.play();
   };
 
-  const capturePhotoScreenshot = () => {
+  const capturePhotoScreenshot = async () => {
     setIsLoading(true);
     const canvas3 = document.getElementById("canvas3") as HTMLCanvasElement;
     const canvas3a = document.getElementById("canvas3a") as HTMLCanvasElement;
@@ -497,13 +452,13 @@ const UiButtons: React.FC = () => {
     fullCanvas.width = canvasWidth;
     fullCanvas.height = canvasHeight;
 
-    const drawLayerWithBlur = (
+    const drawLayerWithBlur = async (
       sourceCanvas: HTMLCanvasElement,
       context: CanvasRenderingContext2D,
       blendMode: GlobalCompositeOperation,
       blurRadius: number
     ) => {
-      const blurredCanvas = createBlurredCanvas(sourceCanvas, blurRadius);
+      const blurredCanvas = await createBlurredCanvas(sourceCanvas, blurRadius);
       context.globalCompositeOperation = blendMode;
       context.drawImage(blurredCanvas, 0, 0);
     };
@@ -523,9 +478,10 @@ const UiButtons: React.FC = () => {
 
     if (fullContext) {
       drawImageLayer(usersPhoto, fullContext);
-      drawLayerWithBlur(canvas3, fullContext, "soft-light", 10);
-      drawLayerWithBlur(canvas3a, fullContext, "soft-light", 10);
+      await drawLayerWithBlur(canvas3, fullContext, "soft-light", 10);
+      await drawLayerWithBlur(canvas3a, fullContext, "soft-light", 10);
     } else {
+      setIsLoading(false); // Hide preloader in case of error
       return;
     }
 
@@ -559,8 +515,9 @@ const UiButtons: React.FC = () => {
       "mergedImage"
     ) as HTMLImageElement;
     mergedImage.src = img;
-    setIsLoading(false);
-    mergeVCanvasesAndDisplay();
+
+    setIsLoading(false); // Hide preloader once everything is done
+    mergeVCanvasesAndDisplay(); // Assuming this is a synchronous function
   };
 
   const mergeVCanvasesAndDisplay = () => {
@@ -588,7 +545,7 @@ const UiButtons: React.FC = () => {
           if (isMobile()) {
             smartWebcam.style.translate = "0px 0px";
             captureScreenshot();
-            smartWebcam.style.translate = "-15% 53px";
+            smartWebcam.style.translate = "-15% 50px";
           } else {
             captureScreenshot();
           }
@@ -632,7 +589,7 @@ const UiButtons: React.FC = () => {
           onChange={() => {}}
           id="sliderP"
         />
-        <div id="pho-icon" onClick={mergeVCanvasesAndDisplay}>
+        <div id="pho-icon">
           <img src="/img/photo.svg" width="20" height="20" alt="Photo Icon" />
         </div>
         <br />

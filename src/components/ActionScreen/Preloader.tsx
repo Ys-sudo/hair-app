@@ -10,7 +10,7 @@ const Preloader: React.FC = () => {
           height="100"
           viewBox="0 0 100 100"
           fill="none"
-          stroke="#fff"
+          stroke="#5f06f9"
           strokeWidth="10"
         >
           <circle cx="50" cy="50" r="45" strokeOpacity="0.5" />
@@ -30,7 +30,7 @@ const Preloader: React.FC = () => {
             />
             <animate
               attributeName="stroke"
-              values="#fff;#888;#fff"
+              values="#5f06f9;#a58fff;#5f06f9"
               dur="3s"
               repeatCount="indefinite"
             />
