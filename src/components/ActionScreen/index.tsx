@@ -4,6 +4,7 @@ import SmartWebcam from "./SmartWebcam";
 import SmartPhoto from "./SmartPhoto";
 import Footer from "./Footer";
 import { getImageSegmenter } from "../../utils/imageSegmenter";
+import DownloadScreen from "./DownloadScreen";
 
 interface ActionScreenProps {
   screenType: "video" | "photo";
@@ -76,6 +77,7 @@ const ActionScreen: React.FC<ActionScreenProps> = ({
       <button className="close-button" id="stopBtn" onClick={handleStopCamera}>
         &times;
       </button>
+      <DownloadScreen />
       <UiButtons />
       <div
         className="modal-body"

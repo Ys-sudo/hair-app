@@ -94,6 +94,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
             .join("");
 
           swiperInstance.update();
+          addClickList(); // Add click listeners to the new buttons
           if (!selectedSeries.dyes.includes(selectedDye!)) {
             setSelectedDye(selectedSeries.dyes[0]);
             const initialDye = selectedSeries.dyes[0];
@@ -105,6 +106,51 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
       updateSwiperSlides(selectedSeriesIndex);
     }
   }, [seriesList, selectedSeriesIndex]);
+
+  // Utility function to convert RGB to RGBA
+  function rgbToa(rgb: string) {
+    let rgba = rgb.replace("rgb", "rgba").replace(")", ", 1)");
+    return rgba;
+  }
+
+  // Function to add pulse animation
+  function addPulseAnimation(element: HTMLElement, rgbColor: string) {
+    const rgbaColor = rgbToa(rgbColor);
+    const styleSheet = document.styleSheets[0];
+    const keyframes = `
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 ${rgbaColor};
+        }
+        75% {
+          box-shadow: 0 0 0 8px ${rgbaColor.replace(", 1)", ", 0.1)")};
+        }
+        100% {
+          box-shadow: 0 0 0 10px ${rgbaColor.replace(", 1)", ", 0)")};
+        }
+      }
+    `;
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+    element.style.animation = "pulse 2s infinite";
+  }
+
+  // Function to add event listeners for click events
+  function addClickList() {
+    document.querySelectorAll(".color-btn").forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        const bgColor = target.style.backgroundColor;
+        // Remove animation class from all buttons
+        document.querySelectorAll(".color-btn").forEach((btn) => {
+          btn.classList.remove("animated");
+          (btn as HTMLElement).style.animation = ""; // Reset animation
+        });
+        target.classList.add("animated");
+        addPulseAnimation(target, bgColor);
+      });
+    });
+  }
 
   // Handle dye selection and update the color
   const handleDyeSelection = useCallback(
