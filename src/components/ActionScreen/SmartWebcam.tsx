@@ -23,6 +23,13 @@ const SmartWebcam: React.FC<SmartWebcamProps> = ({
   const [videoReady, setVideoReady] = useState(false);
   const lastWebcamTimeRef = useRef(-1);
 
+  // Use a ref to store the latest maskColor without causing re-renders
+  const maskColorRef = useRef<Array<number>>(maskColor);
+  // Update the ref value whenever maskColor changes
+  useEffect(() => {
+    maskColorRef.current = maskColor;
+  }, [maskColor]);
+
   // This effect will start the webcam when imageSegmenter and stream are ready
   useEffect(() => {
     if (imageSegmenter && stream) {
@@ -39,7 +46,7 @@ const SmartWebcam: React.FC<SmartWebcamProps> = ({
     if (webcamRunning && videoReady && imageSegmenter) {
       predictWebcam();
     }
-  }, [webcamRunning, videoReady, imageSegmenter, maskColor]);
+  }, [webcamRunning, videoReady, imageSegmenter]);
 
   const startWebcam = async () => {
     try {
@@ -83,6 +90,9 @@ const SmartWebcam: React.FC<SmartWebcamProps> = ({
       return;
     }
 
+    //window.savedImageData = null;
+    window.savedImageDataV = null;
+
     const video = videoRef.current;
     const canvas1 = canvas1Ref.current;
     const canvas1a = canvas1aRef.current;
@@ -94,7 +104,7 @@ const SmartWebcam: React.FC<SmartWebcamProps> = ({
     }
 
     const canvasCtx = canvas1.getContext("2d", { willReadFrequently: true });
-    const canvasCtxa = canvas1a.getContext("2d", { willReadFrequently: true });
+    //const canvasCtxa = canvas1a.getContext("2d", { willReadFrequently: true });
     const canvasCtx2 = canvas2.getContext("2d", { willReadFrequently: true });
 
     if (video.currentTime === lastWebcamTimeRef.current) {
@@ -141,7 +151,7 @@ const SmartWebcam: React.FC<SmartWebcamProps> = ({
         if (!maskVal) {
           j += 4;
         } else {
-          const [r, g, b, a] = maskColor;
+          const [r, g, b, a] = maskColorRef.current;
           imageData![j] = r + imageData![j];
           imageData![j + 1] = g + imageData![j + 1];
           imageData![j + 2] = b + imageData![j + 2];

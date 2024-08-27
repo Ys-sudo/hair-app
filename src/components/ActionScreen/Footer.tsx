@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Swiper from "swiper";
 import "swiper/css";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -25,99 +25,28 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
   const [selectedDye, setSelectedDye] = useState<Dye | null>(null);
   const [swiperInstance, setSwiperInstance] = useState<Swiper | null>(null);
 
+  // Fetch data from Firebase only once when the component mounts
   useEffect(() => {
-    const database = getDatabase(app);
-    const dbRef = ref(database, "/");
-    onValue(dbRef, (snapshot) => {
-      const data: DyeData = snapshot.val();
-      setSeriesList(data.series);
-      setSelectedSeriesIndex(0);
-      if (data.series.length > 0 && data.series[0].dyes.length > 0) {
-        setSelectedDye(data.series[0].dyes[0]); // Initial dye selection
-        updateColor(
-          data.series[0].dyes[0].color,
-          data.series[0].dyes[0].opacity
-        ); // Set initial color
-      }
-    });
+    const fetchData = () => {
+      const database = getDatabase(app);
+      const dbRef = ref(database, "/");
+      onValue(dbRef, (snapshot) => {
+        const data: DyeData = snapshot.val();
+        if (data && data.series.length > 0) {
+          setSeriesList(data.series);
+          setSelectedSeriesIndex(0);
+          const initialDye = data.series[0].dyes[0];
+          if (initialDye) {
+            setSelectedDye(initialDye);
+            updateColor(initialDye.color, initialDye.opacity);
+          }
+        }
+      });
+    };
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    if (swiperInstance && seriesList.length > 0) {
-      updateSwiperSlides(selectedSeriesIndex); // Update slides when series changes
-    }
-  }, [swiperInstance, seriesList, selectedSeriesIndex]);
-
-  useEffect(() => {
-    if (selectedDye) {
-      updateColor(selectedDye.color, selectedDye.opacity); // Update color when dye changes
-    }
-  }, [selectedDye]);
-
-  const updateSwiperSlides = (seriesIndex: number) => {
-    if (!swiperInstance || seriesList.length === 0) return;
-    const selectedSeries = seriesList[seriesIndex];
-
-    const swiperWrapper = document.querySelector(".swiper-wrapper");
-    if (swiperWrapper) {
-      swiperWrapper.innerHTML = "";
-
-      selectedSeries.dyes.forEach((dye: Dye) => {
-        const slide = document.createElement("div");
-        slide.className = "swiper-slide";
-        slide.innerHTML = `<div onclick='window.setDye(${seriesIndex}, "${dye.name}")' style="background-color: ${dye.color};" class="color-btn"></div>`;
-        swiperWrapper.appendChild(slide);
-      });
-
-      swiperInstance.update();
-      // Ensure the selected dye is not reset unless necessary
-      if (!selectedDye || !selectedSeries.dyes.includes(selectedDye)) {
-        setSelectedDye(selectedSeries.dyes[0]);
-      }
-    }
-  };
-
-  const handleDyeClick = (dye: Dye) => {
-    setSelectedDye(dye);
-  };
-
-  const handleSeriesChange = (index: number) => {
-    setSelectedSeriesIndex(index);
-    closeDropdown();
-  };
-
-  const toggleDropdown = () => {
-    const optionsContainer = document.querySelector(".options-container");
-    if (optionsContainer?.classList.contains("open")) {
-      closeDropdown();
-    } else {
-      openDropdown();
-    }
-  };
-
-  const openDropdown = () => {
-    const selectedOption = document.querySelector(".selected-option");
-    const optionsContainer = document.querySelector(".options-container");
-    optionsContainer?.classList.add("open");
-    selectedOption?.classList.add("hide");
-    document.addEventListener("click", closeDropdownListener);
-  };
-
-  const closeDropdown = () => {
-    const selectedOption = document.querySelector(".selected-option");
-    const optionsContainer = document.querySelector(".options-container");
-    optionsContainer?.classList.remove("open");
-    selectedOption?.classList.remove("hide");
-    document.removeEventListener("click", closeDropdownListener);
-  };
-
-  const closeDropdownListener = (event: MouseEvent) => {
-    const seriesSelect = document.querySelector("#series-select");
-    if (!seriesSelect?.contains(event.target as Node)) {
-      closeDropdown();
-    }
-  };
-
+  // Initialize Swiper only once when the component mounts
   useEffect(() => {
     const swiper = new Swiper(".swiper", {
       freeMode: true,
@@ -136,35 +65,96 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
         draggable: true,
       },
     });
-
     setSwiperInstance(swiper);
 
-    window.setDye = (seriesIndex: number, dyeName: string) => {
-      if (seriesList.length === 0 || !seriesList[seriesIndex]) {
-        console.error(`Series with index ${seriesIndex} does not exist.`);
-        return;
-      }
+    // Cleanup event listeners on unmount
+    return () => {
+      swiper.destroy();
+    };
+  }, []);
 
+  // Update Swiper slides when seriesList or selectedSeriesIndex changes
+  useEffect(() => {
+    if (swiperInstance && seriesList.length > 0) {
+      const updateSwiperSlides = (seriesIndex: number) => {
+        const selectedSeries = seriesList[seriesIndex];
+        const swiperWrapper = document.querySelector(".swiper-wrapper");
+
+        if (swiperWrapper) {
+          swiperWrapper.innerHTML = "";
+          swiperWrapper.innerHTML = selectedSeries.dyes
+            .map(
+              (dye) =>
+                `<div class="swiper-slide">
+                  <div onclick='window.setDye(${seriesIndex}, "${dye.name}")' 
+                       style="background-color: ${dye.color};" 
+                       class="color-btn"></div>
+                 </div>`
+            )
+            .join("");
+
+          swiperInstance.update();
+          if (!selectedSeries.dyes.includes(selectedDye!)) {
+            setSelectedDye(selectedSeries.dyes[0]);
+            const initialDye = selectedSeries.dyes[0];
+            updateColor(initialDye.color, initialDye.opacity);
+          }
+        }
+      };
+
+      updateSwiperSlides(selectedSeriesIndex);
+    }
+  }, [seriesList, selectedSeriesIndex]);
+
+  // Handle dye selection and update the color
+  const handleDyeSelection = useCallback(
+    (seriesIndex: number, dyeName: string) => {
       const selectedSeries = seriesList[seriesIndex];
-      const selectedDye = selectedSeries.dyes.find(
+      const selectedDye = selectedSeries?.dyes.find(
         (dye) => dye.name === dyeName
       );
 
-      if (!selectedDye) {
-        console.error(
-          `Dye with name ${dyeName} does not exist in the selected series.`
-        );
-        return;
+      if (selectedDye) {
+        setSelectedDye(selectedDye);
+        updateColor(selectedDye.color, selectedDye.opacity);
       }
+    },
+    [selectedSeriesIndex, updateColor]
+  );
 
-      setSelectedDye(selectedDye);
-      updateColor(selectedDye.color, selectedDye.opacity);
-    };
+  // Update window.setDye whenever seriesList or handleDyeSelection changes
+  useEffect(() => {
+    window.setDye = handleDyeSelection;
+  }, [handleDyeSelection]);
 
-    return () => {
+  const handleSeriesChange = (index: number) => {
+    setSelectedSeriesIndex(index);
+    closeDropdown();
+  };
+
+  const toggleDropdown = () => {
+    const optionsContainer = document.querySelector(".options-container");
+    optionsContainer?.classList.toggle("open");
+    document.querySelector(".selected-option")?.classList.toggle("hide");
+    if (optionsContainer?.classList.contains("open")) {
+      document.addEventListener("click", closeDropdownListener);
+    } else {
       document.removeEventListener("click", closeDropdownListener);
-    };
-  }, [seriesList, updateColor]);
+    }
+  };
+
+  const closeDropdownListener = (event: MouseEvent) => {
+    const seriesSelect = document.querySelector("#series-select");
+    if (!seriesSelect?.contains(event.target as Node)) {
+      closeDropdown();
+    }
+  };
+
+  const closeDropdown = () => {
+    document.querySelector(".options-container")?.classList.remove("open");
+    document.querySelector(".selected-option")?.classList.remove("hide");
+    document.removeEventListener("click", closeDropdownListener);
+  };
 
   return (
     <div className="modal-footer" id="footer" style={{ display: "contents" }}>
@@ -212,7 +202,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
                       className="color-sample"
                       style={{ backgroundColor: dye.color }}
                       title={dye.name}
-                      onClick={() => handleDyeClick(dye)} // Call handleDyeClick on color sample click
+                      onClick={() => handleDyeSelection(index, dye.name)} // Handle dye selection
                     ></div>
                   ))}
                 </div>

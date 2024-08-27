@@ -168,7 +168,13 @@ html {
 }
 
 .swiper-scrollbar {
-  margin-top: 20px;
+  margin-top: -10px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.swiper-scrollbar-drag {
+  background: #5f06f9;
+  height: 10px;
+  border-radius: 5px;
 }
 .swiper-horizontal {
   height: 100px !important;
@@ -395,16 +401,21 @@ html {
 
 #photo-booth {
   clip-path: border-box;
+  position: relative;
 }
 
 .smart-webcam {
   transform: scale(1.4);
-  translate: -190px 60px;
+  translate: -190px 5px;
 }
 
 @media screen and (max-width: 769px) {
   .smart-webcam {
     transform: scale(1.3);
-    translate: -15% 53px;
+    translate: -15% 30px;
   }
+}
+
+#draggableBorderV {
+  width: 0.5px !important;
 }

@@ -41,7 +41,13 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
 
   useEffect(() => {
     if (segmentationResult) {
+      let tempVal = (document.getElementById("sliderP") as HTMLInputElement)
+        .value;
+      (document.getElementById("sliderP") as HTMLInputElement).value = "375";
+      window.beforeAfterSegmentP();
       applyMask(segmentationResult.categoryMask);
+      (document.getElementById("sliderP") as HTMLInputElement).value = tempVal;
+      window.beforeAfterSegmentP();
     }
   }, [maskColor, segmentationResult]); // Re-apply mask whenever maskColor or segmentationResult changes
 
@@ -72,6 +78,7 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
       console.log("One of the required elements is not initialized");
       return;
     }
+    //window.savedImageData = null;
 
     const canvasPhoto = canvas3Ref.current!;
     const canvasPhotoA = canvas3aRef.current!;
@@ -120,7 +127,7 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
     const cxtA = canvasPhotoA.getContext("2d")!;
 
     if (!cxt || !cxtA) return;
-
+    window.savedImageData = null;
     const width = canvasPhoto.width;
     const height = canvasPhoto.height;
 
@@ -171,6 +178,7 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
     // Apply a stronger mask effect to canvas3a
     cxtA.clearRect(0, 0, width, height);
     cxtA.putImageData(imageDataA, 0, 0);
+    window.beforeAfterSegmentP();
   };
 
   return (
