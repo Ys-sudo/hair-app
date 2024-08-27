@@ -14,6 +14,7 @@ const UiButtons: React.FC = () => {
   window.savedImageDataV = window.savedImageDataV || null;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [worker, setWorker] = useState<Worker | null>(null);
 
   const isMobile = () => window.innerWidth <= 768;
 

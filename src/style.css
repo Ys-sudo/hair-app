@@ -61,6 +61,7 @@ html {
 .modal {
   background: #111;
   max-width: 375px;
+  clip-path: border-box;
   max-height: 669px;
   width: 100%;
   height: 100%;

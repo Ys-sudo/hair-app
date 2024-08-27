@@ -24,7 +24,7 @@ export const getImageSegmenter = async (runningMode: "IMAGE" | "VIDEO") => {
     imageSegmenterInstance = await ImageSegmenter.createFromOptions(vision, {
       baseOptions: {
         modelAssetPath: "./hair_segmenter.tflite",
-        delegate: "GPU",
+        delegate: "CPU",
       },
       runningMode,
       outputCategoryMask: true,

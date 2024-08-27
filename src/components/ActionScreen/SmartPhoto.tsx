@@ -21,6 +21,8 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
 
   const [segmentationResult, setSegmentationResult] = useState<any>(null); // To store the segmentation result
 
+  const isMobile = () => window.innerWidth <= 768;
+
   useEffect(() => {
     if (imageSegmenter) {
       setRunningMode("IMAGE");
@@ -57,10 +59,37 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
       if (imgRef.current) {
         imgRef.current.onload = () => {
           console.log("Image loaded:", imgRef.current);
+          const width = imgRef.current?.width;
+          const height = imgRef.current?.height;
+          let aspectRatio;
+          if (width && height) {
+            aspectRatio = width / height;
+          }
+          //alert(aspectRatio);
+          const container = document.getElementById("photoSegment");
+          // Check if the aspect ratio is close to 16:9, 4:3, or 1:1
+          if (container && aspectRatio && isMobile()) {
+            if (Math.abs(aspectRatio - 0.56) < 0.01) {
+              // Apply transformations for 16:9 ratio if needed
+              container.style.transform = "scale(1) translate(0px, 70px)";
+              // Add any transformations needed for 16:9 images
+            } else if (Math.abs(aspectRatio - 0.75) < 0.01) {
+              // Apply transformations for 4:3 ratio
+              container.style.transform = "scale(1.23) translate(0px, -40px)";
+            } else if (Math.abs(aspectRatio - 1) < 0.01) {
+              // Apply transformations for 1:1 ratio (square)
+              container.style.transform = "scale(1.6) translate(0px, -115px)";
+            } else {
+              container.style.transform = "scale(1) translate(0px, 70px)";
+            }
+          }
           if (imgRef.current) {
             imgRef.current.style.display = "block"; // Show the image when it's loaded
           }
-          handlePhoto(); // Only call handlePhoto once the image is loaded
+          //workaround for mobile ios safari
+          setTimeout(handlePhoto, 500);
+          setTimeout(handlePhoto, 501);
+          setTimeout(handlePhoto, 502);
         };
         imgRef.current.src = e.target?.result as string;
       }
