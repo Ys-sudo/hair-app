@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 interface HomeScreenProps {
   setCurrentScreen: React.Dispatch<
@@ -13,8 +13,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   setUploadedPhoto,
   setStream,
 }) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });

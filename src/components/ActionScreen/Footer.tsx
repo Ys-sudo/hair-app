@@ -165,7 +165,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
         updateColor(selectedDye.color, selectedDye.opacity);
       }
     },
-    [selectedSeriesIndex, updateColor]
+    [seriesList, updateColor]
   );
 
   // Update window.setDye whenever seriesList or handleDyeSelection changes

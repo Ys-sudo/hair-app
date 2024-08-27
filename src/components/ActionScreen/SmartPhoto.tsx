@@ -27,7 +27,7 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
     if (imageSegmenter) {
       setRunningMode("IMAGE");
     }
-  }, [imageSegmenter]);
+  }, [imageSegmenter, setRunningMode]);
 
   useEffect(() => {
     if (uploadedPhoto && imageSegmenter) {
@@ -254,7 +254,7 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
               display: uploadedPhoto ? "block" : "none",
             }}
             crossOrigin="anonymous"
-            alt="User Photo"
+            alt="User's face"
           />
         </div>
       </div>

@@ -61,7 +61,7 @@ const UiButtons: React.FC = () => {
 
   const loadVBorder = () => {
     const draggableBorderV = document.getElementById("draggableBorderV")!;
-    const canvas = document.getElementById("webcam") as HTMLCanvasElement;
+    //const canvas = document.getElementById("webcam") as HTMLCanvasElement;
     let isDragging = false;
     let startX: number;
     let startBorderLeft: number;
@@ -353,9 +353,9 @@ const UiButtons: React.FC = () => {
     if (fullContext) {
       await drawLayerWithBlur(canvas2, fullContext, "source-over", 0);
       if (isMobile()) {
-        await drawLayerWithBlur(canvas1, fullContext, "color", 15);
+        await drawLayerWithBlur(canvas1, fullContext, "color", 35);
       } else {
-        await drawLayerWithBlur(canvas1, fullContext, "color", 30);
+        await drawLayerWithBlur(canvas1, fullContext, "color", 50);
       }
       await drawLayerWithBlur(canvas1a, fullContext, "soft-light", 10);
     } else {
@@ -558,7 +558,7 @@ const UiButtons: React.FC = () => {
     return () => {
       sepIcon?.removeEventListener("click", handleSepIconClick);
     };
-  }, []);
+  });
 
   return (
     <>
@@ -590,7 +590,12 @@ const UiButtons: React.FC = () => {
           id="sliderP"
         />
         <div id="pho-icon">
-          <img src="/img/photo.svg" width="20" height="20" alt="Photo Icon" />
+          <img
+            src="/img/photo.svg"
+            width="20"
+            height="20"
+            alt="Take a photo!"
+          />
         </div>
         <br />
         <div id="sep-icon">
