@@ -278,20 +278,20 @@ const UiButtons: React.FC = () => {
     return new Promise((resolve) => {
       setIsLoading(true); // Show preloader
 
+      // Create a single off-screen canvas
       const offScreenCanvas = document.createElement("canvas");
       const offScreenContext = offScreenCanvas.getContext("2d");
 
       offScreenCanvas.width = sourceCanvas.width;
       offScreenCanvas.height = sourceCanvas.height;
 
+      offScreenContext?.drawImage(sourceCanvas, 0, 0);
+
       if (blurRadius === 0) {
-        offScreenContext?.drawImage(sourceCanvas, 0, 0);
         setIsLoading(false); // Hide preloader
         resolve(offScreenCanvas);
         return;
       }
-
-      offScreenContext?.drawImage(sourceCanvas, 0, 0);
 
       const imageData = offScreenContext?.getImageData(
         0,
@@ -320,13 +320,20 @@ const UiButtons: React.FC = () => {
     const videoElement1 = document.getElementById("webcam") as HTMLVideoElement;
     videoElement1.pause();
     setIsLoading(true);
+
     const canvas1 = document.getElementById("canvas1") as HTMLCanvasElement;
     const canvas1a = document.getElementById("canvas1a") as HTMLCanvasElement;
     const canvas2 = document.getElementById("canvas2") as HTMLCanvasElement;
 
-    const visibleElement = document.getElementById("modal-action"); // Update this to your main container
+    const visibleElement = document.getElementById("modal-action");
     const boundingRect = visibleElement?.getBoundingClientRect();
 
+    if (!boundingRect) {
+      setIsLoading(false); // Ensure the preloader is hidden if there's an error
+      return;
+    }
+
+    // Create only one fullCanvas instead of multiple times
     const fullCanvas = document.createElement("canvas");
     const fullContext = fullCanvas.getContext("2d");
 
@@ -352,22 +359,19 @@ const UiButtons: React.FC = () => {
 
     if (fullContext) {
       await drawLayerWithBlur(canvas2, fullContext, "source-over", 0);
-      await drawLayerWithBlur(canvas1, fullContext, "color", 50);
+      await drawLayerWithBlur(canvas1, fullContext, "color", 30);
       await drawLayerWithBlur(canvas1a, fullContext, "soft-light", 10);
     } else {
       setIsLoading(false); // Ensure the preloader is hidden if there's an error
       return;
     }
 
+    // Create the croppedCanvas once and reuse it
     const croppedCanvas = document.createElement("canvas");
     const croppedContext = croppedCanvas.getContext("2d");
-    if (boundingRect) {
-      croppedCanvas.width = boundingRect.width;
-      croppedCanvas.height = boundingRect.height;
-    } else {
-      setIsLoading(false); // Ensure the preloader is hidden if there's an error
-      return;
-    }
+
+    croppedCanvas.width = boundingRect.width;
+    croppedCanvas.height = boundingRect.height;
 
     const scaleX = croppedCanvas.width / fullCanvas.width;
     const scaleY = croppedCanvas.height / fullCanvas.height;
@@ -383,7 +387,6 @@ const UiButtons: React.FC = () => {
       croppedContext?.save();
       croppedContext?.translate(translateX, 0);
       croppedContext?.scale(mobileScale, mobileScale);
-
       croppedContext?.drawImage(
         fullCanvas,
         0,
@@ -395,7 +398,6 @@ const UiButtons: React.FC = () => {
         (fullCanvas.width * scale) / mobileScale,
         (fullCanvas.height * scale) / mobileScale
       );
-
       croppedContext?.restore();
     } else {
       croppedContext?.drawImage(
@@ -525,36 +527,34 @@ const UiButtons: React.FC = () => {
 
   useEffect(() => {
     const sepIcon = document.getElementById("sep-icon");
+    const phoIcon = document.getElementById("pho-icon");
+
+    const handlePhoIconClick = (event) => {
+      event.stopPropagation(); // Prevent the event from bubbling up
+      const smartWebcam = document.getElementById("smart-webcam");
+      const smartPhoto = document.getElementById("smart-photo");
+      if (smartWebcam?.style.display === "flex") {
+        captureScreenshot();
+      } else if (smartPhoto?.style.display === "block") {
+        capturePhotoScreenshot();
+      }
+    };
+
     sepIcon?.addEventListener("click", handleSepIconClick);
+    phoIcon?.addEventListener("click", handlePhoIconClick);
 
     if (document.getElementById("smart-photo")?.style.display === "block") {
       (document.getElementById("sliderP") as HTMLInputElement).value = "375";
     }
 
-    const phoIcon = document.getElementById("pho-icon");
-    if (phoIcon) {
-      phoIcon.addEventListener("click", () => {
-        const smartWebcam = document.getElementById("smart-webcam");
-        const smartPhoto = document.getElementById("smart-photo");
-
-        if (smartWebcam?.style.display === "flex") {
-          if (isMobile()) {
-            smartWebcam.style.translate = "0px 0px";
-            captureScreenshot();
-            smartWebcam.style.translate = "-15% 50px";
-          } else {
-            captureScreenshot();
-          }
-        } else if (smartPhoto?.style.display === "block") {
-          capturePhotoScreenshot();
-        }
-      });
-    }
+    console.log("Event listeners attached"); // Log to ensure this only happens once
 
     return () => {
       sepIcon?.removeEventListener("click", handleSepIconClick);
+      phoIcon?.removeEventListener("click", handlePhoIconClick);
+      console.log("Event listeners removed"); // Log to ensure cleanup is working
     };
-  });
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (
     <>
