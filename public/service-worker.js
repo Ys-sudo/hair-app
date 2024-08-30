@@ -1,15 +1,17 @@
 // public/service-worker.ts
 
 // Cache names
-const CACHE_NAME = "my-app-cache-v1";
-const urlsToCache = ["/", "/index.html", "/static/"];
+const CACHE_NAME = "hair-color-app-v1";
+const urlsToCache = ["/", "/index.html", "/public/*", "/build/*"];
 
 // Install event
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Opened cache");
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache).catch((error) => {
+        console.error("Failed to cache resources:", error);
+      });
     })
   );
 });
