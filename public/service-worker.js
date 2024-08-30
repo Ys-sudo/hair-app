@@ -2,7 +2,7 @@
 
 // Cache names
 const CACHE_NAME = "my-app-cache-v1";
-const urlsToCache = ["/", "/index.html", "/static/*"];
+const urlsToCache = ["/", "/index.html", "/static/"];
 
 // Install event
 self.addEventListener("install", (event) => {
