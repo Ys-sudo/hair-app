@@ -352,11 +352,7 @@ const UiButtons: React.FC = () => {
 
     if (fullContext) {
       await drawLayerWithBlur(canvas2, fullContext, "source-over", 0);
-      if (isMobile()) {
-        await drawLayerWithBlur(canvas1, fullContext, "color", 35);
-      } else {
-        await drawLayerWithBlur(canvas1, fullContext, "color", 50);
-      }
+      await drawLayerWithBlur(canvas1, fullContext, "color", 50);
       await drawLayerWithBlur(canvas1a, fullContext, "soft-light", 10);
     } else {
       setIsLoading(false); // Ensure the preloader is hidden if there's an error
