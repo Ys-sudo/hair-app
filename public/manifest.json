@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Hair Color App",
+  "name": "AR app to change and test hair colors",
   "icons": [
     {
       "src": "favicon.ico",
