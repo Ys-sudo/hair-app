@@ -12,6 +12,7 @@
 }
 #users-photo {
   border-radius: 10px 10px 0 0 !important;
+  max-width: 375px;
 }
 canvas {
   transition-duration: 0s !important;

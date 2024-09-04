@@ -477,6 +477,7 @@ const UiButtons: React.FC = () => {
     if (fullContext) {
       drawImageLayer(usersPhoto, fullContext);
       await drawLayerWithBlur(canvas3, fullContext, "soft-light", 10);
+      await drawLayerWithBlur(canvas3, fullContext, "soft-light", 10);
       await drawLayerWithBlur(canvas3a, fullContext, "soft-light", 10);
     } else {
       setIsLoading(false); // Hide preloader in case of error
