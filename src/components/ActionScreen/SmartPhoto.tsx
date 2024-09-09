@@ -55,47 +55,84 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
 
   const loadAndHandlePhoto = (file: File) => {
     const reader = new FileReader();
+
     reader.onload = (e) => {
       if (imgRef.current) {
-        imgRef.current.onload = () => {
-          console.log("Image loaded:", imgRef.current);
-          const width = imgRef.current?.width;
-          const height = imgRef.current?.height;
-          let aspectRatio;
-          if (width && height) {
-            aspectRatio = width / height;
-          }
-          //alert(aspectRatio);
-          const container = document.getElementById("photoSegment");
-          // Check if the aspect ratio is close to 16:9, 4:3, or 1:1
-          if (container && aspectRatio && isMobile()) {
-            if (Math.abs(aspectRatio - 0.56) < 0.01) {
-              // Apply transformations for 16:9 ratio if needed
-              container.style.transform = "scale(1) translate(0px, 70px)";
-              // Add any transformations needed for 16:9 images
-            } else if (Math.abs(aspectRatio - 0.75) < 0.01) {
-              // Apply transformations for 4:3 ratio
-              container.style.transform = "scale(1.23) translate(0px, -40px)";
-            } else if (Math.abs(aspectRatio - 1) < 0.01) {
-              // Apply transformations for 1:1 ratio (square)
-              container.style.transform = "scale(1.6) translate(0px, -115px)";
-            } else {
-              container.style.transform = "scale(1) translate(0px, 70px)";
+        // Use the scaleAndCropImage function here before loading the image
+        scaleAndCropImage(file, 375, 620, (blob) => {
+          const imgURL = URL.createObjectURL(blob);
+
+          imgRef.current.onload = () => {
+            console.log("Image loaded:", imgRef.current);
+
+            if (imgRef.current) {
+              imgRef.current.style.display = "block"; // Show the image when it's loaded
             }
-          }
-          if (imgRef.current) {
-            imgRef.current.style.display = "block"; // Show the image when it's loaded
-          }
-          //workaround for mobile ios safari
-          setTimeout(handlePhoto, 500);
-          setTimeout(handlePhoto, 501);
-          setTimeout(handlePhoto, 502);
-        };
-        imgRef.current.src = e.target?.result as string;
+
+            // workaround for mobile ios safari
+            setTimeout(handlePhoto, 500);
+            setTimeout(handlePhoto, 501);
+            setTimeout(handlePhoto, 502);
+          };
+
+          // Set the processed (cropped and scaled) image URL as the src
+          imgRef.current.src = imgURL;
+        });
       }
     };
+
     reader.readAsDataURL(file);
   };
+
+  function scaleAndCropImage(file, width, height, callback) {
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      // Type assertion to indicate this is a string (Data URL)
+      img.src = e.target?.result as string;
+    };
+
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const imgAspectRatio = img.width / img.height;
+      const canvasAspectRatio = width / height;
+
+      let sx, sy, sWidth, sHeight;
+
+      // Determine the cropping dimensions based on aspect ratio
+      if (imgAspectRatio > canvasAspectRatio) {
+        sHeight = img.height;
+        sWidth = sHeight * canvasAspectRatio;
+        sx = (img.width - sWidth) / 2;
+        sy = 0;
+      } else {
+        sWidth = img.width;
+        sHeight = sWidth / canvasAspectRatio;
+        sx = 0;
+        sy = (img.height - sHeight) / 2;
+      }
+
+      // Draw the image into the canvas
+      ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, width, height);
+
+      // Return the cropped and scaled image as a blob
+      canvas.toBlob(
+        (blob) => {
+          callback(blob);
+        },
+        "image/jpeg",
+        0.95
+      );
+    };
+
+    reader.readAsDataURL(file);
+  }
 
   const handlePhoto = async () => {
     if (
