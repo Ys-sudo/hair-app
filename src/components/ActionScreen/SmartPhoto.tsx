@@ -21,8 +21,6 @@ const SmartPhoto: React.FC<SmartPhotoProps> = ({
 
   const [segmentationResult, setSegmentationResult] = useState<any>(null); // To store the segmentation result
 
-  const isMobile = () => window.innerWidth <= 768;
-
   useEffect(() => {
     if (imageSegmenter) {
       setRunningMode("IMAGE");
