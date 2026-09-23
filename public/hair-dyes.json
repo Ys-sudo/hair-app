@@ -1,0 +1,389 @@
+{
+  "series": [
+    {
+      "name": "Vibrant Reds",
+      "dyes": [
+        {
+          "name": "Rose red",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/a8458d64-e838-4781-93d9-093c8eed0423/multi-cream-color-farba-intensywna-czerwien-%252F34%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-czerwien-%2F34%2F,c32,p803,pl.html",
+          "color": "#B22222",
+          "opacity": 200
+        },
+        {
+          "name": "Cherry Bomb",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/b78448de-844f-4c5c-8add-0205659f1ae6/multi-cream-color-farba-intensywna-miedz-%252F44%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-miedz-%2F44%2F,c32,p805,pl.html",
+          "color": "#D70040",
+          "opacity": 134
+        },
+        {
+          "name": "Scarlet Passion",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/fe7c59b2-6368-49e6-8bcf-745790cc2dc2/multi-cream-color-farba-plomienny-rudy-%252F43%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-plomienny-rudy-%2F43%2F,c32,p784,pl.html",
+          "color": "#FF2400",
+          "opacity": 150
+        },
+        {
+          "name": "Ruby Radiance",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-czerwien-%2F34%2F,c32,p803,pl.html",
+          "color": "#9B111E",
+          "opacity": 87
+        },
+        {
+          "name": "Fiery Fiesta",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-miedz-%2F44%2F,c32,p805,pl.html",
+          "color": "#FF4500",
+          "opacity": 169
+        },
+        {
+          "name": "Raspberry Rush",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-plomienny-rudy-%2F43%2F,c32,p784,pl.html",
+          "color": "#E30B5C",
+          "opacity": 120
+        },
+        {
+          "name": "Garnet Glow",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-czerwien-%2F34%2F,c32,p803,pl.html",
+          "color": "#733635",
+          "opacity": 138
+        },
+        {
+          "name": "Blazing Burgundy",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-intensywna-miedz-%2F44%2F,c32,p805,pl.html",
+          "color": "#800020",
+          "opacity": 110
+        },
+        {
+          "name": "Sunset Sizzle",
+          "serie": "Vibrant Reds",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://sklep.joanna.pl/wlosy-multi-cream-color-farba-plomienny-rudy-%2F43%2F,c32,p784,pl.html",
+          "color": "#FF6347",
+          "opacity": 176
+        }
+      ]
+    },
+    {
+      "name": "Brilliant Blues",
+      "dyes": [
+        {
+          "name": "Ocean Wave",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/ocean_wave",
+          "color": "#1E90FF",
+          "opacity": 160
+        },
+        {
+          "name": "Sky High",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/sky_high",
+          "color": "#87CEEB",
+          "opacity": 143
+        },
+        {
+          "name": "Midnight Magic",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/midnight_magic",
+          "color": "#191970",
+          "opacity": 90
+        },
+        {
+          "name": "Electric Blue",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/electric_blue",
+          "color": "#7DF9FF",
+          "opacity": 175
+        },
+        {
+          "name": "Sapphire Shimmer",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/sapphire_shimmer",
+          "color": "#0F52BA",
+          "opacity": 105
+        },
+        {
+          "name": "Turquoise Treasure",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/turquoise_treasure",
+          "color": "#40E0D0",
+          "opacity": 111
+        },
+        {
+          "name": "Azure Allure",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/azure_allure",
+          "color": "#007FFF",
+          "opacity": 138
+        },
+        {
+          "name": "Cobalt Crush",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/cobalt_crush",
+          "color": "#0047AB",
+          "opacity": 125
+        },
+        {
+          "name": "Arctic Ice",
+          "serie": "Brilliant Blues",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/arctic_ice",
+          "color": "#ADD8E6",
+          "opacity": 167
+        }
+      ]
+    },
+    {
+      "name": "Glorious Greens",
+      "dyes": [
+        {
+          "name": "Emerald Envy",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/emerald_envy",
+          "color": "#50C878",
+          "opacity": 128
+        },
+        {
+          "name": "Minty Fresh",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/minty_fresh",
+          "color": "#98FF98",
+          "opacity": 95
+        },
+        {
+          "name": "Forest Fantasy",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/forest_fantasy",
+          "color": "#228B22",
+          "opacity": 155
+        },
+        {
+          "name": "Lime Lush",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/lime_lush",
+          "color": "#32CD32",
+          "opacity": 170
+        },
+        {
+          "name": "Olive Oasis",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/olive_oasis",
+          "color": "#808000",
+          "opacity": 85
+        },
+        {
+          "name": "Jade Jewel",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/jade_jewel",
+          "color": "#00A36C",
+          "opacity": 141
+        },
+        {
+          "name": "Neon Green",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/neon_green",
+          "color": "#39FF14",
+          "opacity": 93
+        },
+        {
+          "name": "Teal Twist",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/teal_twist",
+          "color": "#008080",
+          "opacity": 140
+        },
+        {
+          "name": "Spring Fling",
+          "serie": "Glorious Greens",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/spring_fling",
+          "color": "#00FF7F",
+          "opacity": 178
+        }
+      ]
+    },
+    {
+      "name": "Playful Purples",
+      "dyes": [
+        {
+          "name": "Royal Amethyst",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/royal_amethyst",
+          "color": "#9370DB",
+          "opacity": 112
+        },
+        {
+          "name": "Lavender Dreams",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/lavender_dreams",
+          "color": "#E6E6FA",
+          "opacity": 167
+        },
+        {
+          "name": "Violet Vibes",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/violet_vibes",
+          "color": "#8A2BE2",
+          "opacity": 132
+        },
+        {
+          "name": "Mauve Magic",
+          "serie": "Playful Purples",
+          "image": "https://example.com/images/mauve_magic.jpg",
+          "shop_link": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "color": "#9932CC",
+          "opacity": 118
+        },
+        {
+          "name": "Plum Passion",
+          "serie": "Playful Purples",
+          "image": "https://example.com/images/plum_passion.jpg",
+          "shop_link": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "color": "#DDA0DD",
+          "opacity": 102
+        },
+        {
+          "name": "Lilac Love",
+          "serie": "Playful Purples",
+          "image": "https://example.com/images/lilac_love.jpg",
+          "shop_link": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "color": "#C8A2C8",
+          "opacity": 145
+        },
+        {
+          "name": "Grape Groove",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/grape_groove",
+          "color": "#6A0DAD",
+          "opacity": 109
+        },
+        {
+          "name": "Orchid Oasis",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/orchid_oasis",
+          "color": "#DA70D6",
+          "opacity": 157
+        },
+        {
+          "name": "Purple Haze",
+          "serie": "Playful Purples",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/purple_haze",
+          "color": "#800080",
+          "opacity": 174
+        }
+      ]
+    },
+    {
+      "name": "Beautiful Browns",
+      "dyes": [
+        {
+          "name": "Chestnut Glow",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/chestnut_glow",
+          "color": "#8B4513",
+          "opacity": 139
+        },
+        {
+          "name": "Mocha Magic",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/mocha_magic",
+          "color": "#6F4E37",
+          "opacity": 121
+        },
+        {
+          "name": "Espresso Elegance",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/espresso_elegance",
+          "color": "#3C1414",
+          "opacity": 99
+        },
+        {
+          "name": "Cocoa Charm",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/cocoa_charm",
+          "color": "#D2691E",
+          "opacity": 112
+        },
+        {
+          "name": "Toffee Twist",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/toffee_twist",
+          "color": "#A0522D",
+          "opacity": 158
+        },
+        {
+          "name": "Hazel Harmony",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/hazel_harmony",
+          "color": "#CD853F",
+          "opacity": 147
+        },
+        {
+          "name": "Walnut Wonder",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/96f80d4e-c236-4711-af90-e0dba95e63a9/multi-cream-color-metallic-farba-bardzo-jasny-perlowy-blond-%252F28%252F.jpg",
+          "shop_link": "https://example.com/shop/walnut_wonder",
+          "color": "#704214",
+          "opacity": 124
+        },
+        {
+          "name": "Caramel Crush",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/45e12df5-7f18-4173-ba79-6ab613f2cb09/multi-cream-color-farba-karmelowy-blond-%252F30%252F.jpg",
+          "shop_link": "https://example.com/shop/caramel_crush",
+          "color": "#C68E17",
+          "opacity": 87
+        },
+        {
+          "name": "Maple Marvel",
+          "serie": "Beautiful Browns",
+          "image": "https://b.assecobs.com/_img/joanna/6b9d78d4-c75d-4484-b903-0d49edb755e7/multi-cream-color-farba-platynowy-blond-%252F32%252F.jpg",
+          "shop_link": "https://example.com/shop/maple_marvel",
+          "color": "#B87333",
+          "opacity": 171
+        }
+      ]
+    }
+  ]
+}

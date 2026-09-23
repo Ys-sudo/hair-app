@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Swiper from "swiper";
 import "swiper/css";
-import { getDatabase, ref, onValue } from "firebase/database";
-import { app } from "../../firebase";
 import ShopLink from "./ShopLink";
 import { Scrollbar, Mousewheel, FreeMode } from "swiper/modules";
 import { Dye, Series, DyeData } from "../../types";
@@ -25,23 +23,20 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
   const [selectedDye, setSelectedDye] = useState<Dye | null>(null);
   const [swiperInstance, setSwiperInstance] = useState<Swiper | null>(null);
 
-  // Fetch data from Firebase only once when the component mounts
+  // Fetch data from the static JSON file only once when the component mounts
   useEffect(() => {
-    const fetchData = () => {
-      const database = getDatabase(app);
-      const dbRef = ref(database, "/");
-      onValue(dbRef, (snapshot) => {
-        const data: DyeData = snapshot.val();
-        if (data && data.series.length > 0) {
-          setSeriesList(data.series);
-          setSelectedSeriesIndex(0);
-          const initialDye = data.series[0].dyes[0];
-          if (initialDye) {
-            setSelectedDye(initialDye);
-            updateColor(initialDye.color, initialDye.opacity);
-          }
+    const fetchData = async () => {
+      const response = await fetch(`${process.env.PUBLIC_URL}/hair-dyes.json`);
+      const data: DyeData = await response.json();
+      if (data && data.series.length > 0) {
+        setSeriesList(data.series);
+        setSelectedSeriesIndex(0);
+        const initialDye = data.series[0].dyes[0];
+        if (initialDye) {
+          setSelectedDye(initialDye);
+          updateColor(initialDye.color, initialDye.opacity);
         }
-      });
+      }
     };
     fetchData();
   }, []);
@@ -89,7 +84,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
                   <div onclick='window.setDye(${seriesIndex}, "${dye.name}")' 
                        style="background-color: ${dye.color};" 
                        class="color-btn"></div>
-                 </div>`
+                 </div>`,
             )
             .join("");
 
@@ -157,7 +152,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
     (seriesIndex: number, dyeName: string) => {
       const selectedSeries = seriesList[seriesIndex];
       const selectedDye = selectedSeries?.dyes.find(
-        (dye) => dye.name === dyeName
+        (dye) => dye.name === dyeName,
       );
 
       if (selectedDye) {
@@ -165,7 +160,7 @@ const Footer: React.FC<FooterProps> = ({ updateColor }) => {
         updateColor(selectedDye.color, selectedDye.opacity);
       }
     },
-    [seriesList, updateColor]
+    [seriesList, updateColor],
   );
 
   // Update window.setDye whenever seriesList or handleDyeSelection changes
